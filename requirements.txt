@@ -1,5 +1,5 @@
 essentia  # TODO: Fix Essentia version once we have a wheel with the required pytools
-joblib~=0.13.2  # also a dependency of librosa, pescador, scikit-learn
+joblib~=0.13  # also a dependency of librosa, pescador, scikit-learn
 librosa~=0.7.0
 numpy~=1.16.4 # also a dependency of essentia, essentia-tensorflow, tensorflow, scikit-image, librosa, scikit-learn, scipy
 pescador~=2.0.2
