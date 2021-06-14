@@ -29,6 +29,13 @@ def prediction(batch_dispatcher, tf_vars):
     id_array = np.hstack(id_list)
     pred_array = np.vstack(pred_list)
 
+        if not array_cost:  # if array_cost is empty, is the first iteration
+            pred_array = pred
+            id_array = batch['ID']
+        else:
+            pred_array = np.concatenate((pred_array,pred), axis=0)
+            id_array = np.append(id_array,batch['ID'])
+        array_cost.append(cost_pred)
     print('predictions', pred_array.shape)
     return pred_array, id_array
 

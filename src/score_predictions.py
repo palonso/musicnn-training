@@ -20,12 +20,12 @@ def score_predictions(args):
     ids, folds, predictions, groundtruth = [], [], dict(), dict()
 
     n_folds = config['config_train']['n_folds']
-    data_dir = Path(config['data_dir'])
+    grondtruth_folder = Path(config['config_train']['gt_test']).parent
     dataset = config['dataset']
 
     # get fold-wise predictions
     for i in range(n_folds):
-        groundtruth_file = data_dir / f"gt_test_{i}.csv"
+        groundtruth_file = grondtruth_folder / f"gt_test_{i}.csv"
 
         with open('{}_{}.json'.format(predictions_file, i), 'r') as f:
             fold = json.load(f)

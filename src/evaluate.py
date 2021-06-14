@@ -50,12 +50,12 @@ def prediction(config, experiment_folder, id2audio_repr_path, id2gt, ids):
     print(id_array.shape)
 
     print('Predictions computed, now evaluating...')
-    y_true, y_pred = shared.average_predictions(pred_array, id_array, ids, id2gt)
+    y_true, y_pred, healthy_ids = shared.average_predictions(pred_array, id_array, ids, id2gt)
     roc_auc, pr_auc = shared.compute_auc(y_true, y_pred)
     acc = shared.compute_accuracy(y_true, y_pred)
 
     metrics = (roc_auc, pr_auc, acc)
-    return y_pred, metrics
+    return y_pred, metrics, healthy_ids
 
 
 def store_results(results_file, predictions_file, models, ids, y_pred, metrics):
@@ -132,7 +132,7 @@ if __name__ == '__main__':
         print('# Test set size: ', len(ids))
 
         print('Performing regular evaluation')
-        y_pred, metrics = prediction(
+        y_pred, metrics, healthy_ids = prediction(
             config_train, experiment_folder, id2audio_repr_path, id2gt, ids)
 
         # store experimental results
@@ -141,4 +141,4 @@ if __name__ == '__main__':
         predictions_file = Path(
             exp_dir, f"predictions_{config_train['fold']}.json")
 
-        store_results(results_file, predictions_file, models, ids, y_pred, metrics)
+        store_results(results_file, predictions_file, models, healthy_ids, y_pred, metrics)

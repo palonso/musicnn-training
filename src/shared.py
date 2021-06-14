@@ -103,6 +103,7 @@ def average_predictions(pred_array, id_array, ids, id2gt=None):
     print('Averaging predictions')
     y_pred = []
     y_true = []
+    healthy_ids = []
     for id in ids:
         try:
             avg = np.mean(pred_array[np.where(id_array == id)], axis=0)
@@ -120,11 +121,12 @@ def average_predictions(pred_array, id_array, ids, id2gt=None):
             y_pred.append(avg)
             if id2gt:
                 y_true.append(id2gt[id])
+                healthy_ids.append(id)
         except:
             print(id)
 
     if id2gt:
-        return y_true, y_pred
+        return y_true, y_pred, healthy_ids
     else:
         return y_pred
 
