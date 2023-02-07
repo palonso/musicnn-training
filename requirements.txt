@@ -1,11 +1,12 @@
-essentia  # TODO: Fix Essentia version once we have a wheel with the required pytools
-joblib~=0.13.2  # also a dependency of pescador, scikit-learn
-numpy~=1.16.4 # also a dependency of essentia, essentia-tensorflow, tensorflow, scikit-image, scikit-learn, scipy
+# essentia  # TODO: Fix Essentia version once we have a wheel with the required pytools
+essentia-tensorflow
+joblib~=1.2.0  # also a dependency of pescador, scikit-learn
+numpy~=1.17.4 # also a dependency of essentia, essentia-tensorflow, tensorflow, scikit-image, scikit-learn, scipy
 pescador~=2.0.2
 pyyaml
 scikit-image
 scikit-learn~=1.0.2
 scipy~=1.3.0  # also a dependency of scikit-image & scikit-learn
-tensorflow>=1.15.0,<3.0
+tensorflow>=1.15.0,<2.7.5
 tf-slim
 tqdm~=4.32.2
