@@ -41,7 +41,7 @@ def do_process(files, index, extractor, audio_representation_dir):
         fw = open(audio_representation_dir / "index.tsv", "a")
         fw.write("%s\t%s\n" % (id, audio_repr_file.relative_to(audio_representation_dir)))
         fw.close()
-        print(str(index) + '/' + str(len(files)) + ' Computed: %s' % audio_file)
+        # print(str(index) + '/' + str(len(files)) + ' Computed: %s' % audio_file)
 
     except Exception as e:
         ferrors = open(audio_representation_dir / "errors.txt", "a")
