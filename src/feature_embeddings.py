@@ -34,7 +34,7 @@ class EmbeddingFromMelSpectrogram:
 
         self.seconds_to_patches = self.config["seconds_to_patches"]
 
-        if self.model_type in ("musicnn", "effnet_b0", "effnet_b0_3M"):
+        if self.model_type in ("musicnn", "effnet_b0", "effnet_b0_3M", "maest"):
             self.mel_extractor = MelSpectrogramMusiCNN()
         elif self.model_type in ("vggish", "yamnet"):
             self.mel_extractor = MelSpectrogramVGGish()
@@ -60,6 +60,10 @@ class EmbeddingFromMelSpectrogram:
 
     def compute(self, audio_file):
         mel_spectrogram = self.mel_extractor.compute(audio_file)
+
+        if self.model_type == "maest":
+            mel_spectrogram = (mel_spectrogram - self.config["mel_mean"]) / (self.config["mel_std"] * 2)
+
         # in OpenL3 the hop size is computed in the feature extraction level
         if self.model_type == "openl3":
             hop_size_samples = self.x_size
@@ -82,7 +86,22 @@ class EmbeddingFromMelSpectrogram:
                 input_batch = batch[start:end]
             pool.set(self.input_layer, input_batch)
             out_pool = self.model(pool)
-            output_batch = out_pool[self.output_layer].squeeze()
+            output_batch = out_pool[self.output_layer]
+
+            if self.model_type == "maest":
+                # discard singleton direction
+                output_batch = np.squeeze(output_batch, axis=1)
+
+                # get the CLS, DISCT and AVG tokens following the MAEST paper (Sec. 4.1)
+                # http://hdl.handle.net/10230/58023
+                cls = output_batch[:, 0, :]
+                dist = output_batch[:, 1, :]
+                avg = np.average(output_batch[:, 2:, :], axis=1)
+
+                output_batch = np.hstack([avg, dist, avg])
+
+            else:
+                output_batch = output_batch.squeeze()
 
             if (batch_len != self.batch_size) and self.fixed_batch_size:
                 output_batch = output_batch[:batch_len]

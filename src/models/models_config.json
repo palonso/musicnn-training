@@ -72,5 +72,19 @@
         "seconds_to_patches": 100,
         "squeeze": true,
         "permutation": null
+    },
+    "maest": {
+        "filename": "discogs-maest-30s-pw-1.pb",
+        "input_type": "mel_musicnn",
+        "input": "serving_default_melspectrogram",
+        "embeddings": "StatefulPartitionedCall:7",
+        "activations": "StatefulPartitionedCall:0",
+        "x_size": 1876,
+        "y_size": 96,
+        "seconds_to_patches": 1875,
+        "squeeze": true,
+        "permutation": null,
+        "mel_mean": 2.06755686098554,
+        "mel_std": 1.268292820667291
     }
 }

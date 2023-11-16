@@ -69,7 +69,7 @@ def process_files(files, audio_representation_dir, feature_type=None, config=Non
 
     # import only the feature extractors that we need. This is because for the spectrogram
     # features `essentia` but the embeddings require `essentia-tensorflow`
-    elif feature_type in ('effnet_b0', 'effnet_b0_3M', 'musicnn', 'openl3', 'tempocnn', 'vggish', 'yamnet'):
+    elif feature_type in ('effnet_b0', 'effnet_b0_3M', 'musicnn', 'openl3', 'tempocnn', 'vggish', 'yamnet', 'maest'):
         from feature_embeddings import EmbeddingFromMelSpectrogram
         extractor = EmbeddingFromMelSpectrogram(feature_type)
 
